@@ -1,15 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
-import {LoginComponent} from '../login/login.component'
-
 import { ApiService } from '../api.service';
 import { UtilityService } from '../utility.service';
 import { AuthService } from '../auth/auth.service';
-import { Router } from '@angular/router';
 // Library used for interacting with the page
 // import {MatDialog} from '@angular/material/dialog';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {Inject} from '@angular/core';
 
 // To allow dialog windows within the current window
 import { TemplateRef, ViewChild } from '@angular/core';
@@ -22,10 +18,6 @@ import { FormBuilder } from '@angular/forms';
 import { ReactiveFormsModule, FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
-// Models
-import { User } from '../models/User';
-
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -35,43 +27,17 @@ export class DashboardComponent implements OnInit {
 
   @ViewChild('CallAbout') CallAbout: TemplateRef<any>;
   
-  data: JSON;
-  name;
-  name2;
-  
-  users;
-  projects;
-
-  usersJson
-
   oracle: string = '';
-
-  registrationForm = this.formBuilder.group({
-    firstname: ['', Validators.required],
-    lastname: ['', Validators.required],
-    grade: [''],
-    profile: [''],
-  });
 
   constructor(
     private api: ApiService,
-    private utility: UtilityService,
     public authService: AuthService,
-    private httpClient: HttpClient, 
     private dialog: MatDialog, 
-    private formBuilder: FormBuilder,
     private _snackBar: MatSnackBar,
-
-
     ) { }
 
   ngOnInit(){
     this.RequestOracle()
-
-    // this.RequestProjects()
-    // this.RequestUsers()
-
-    // console.log(this.data)
   }
 
   public async Test(){
@@ -85,12 +51,6 @@ export class DashboardComponent implements OnInit {
 //  | |    | |__| | |\  | |____   | |   _| || |__| | |\  |____) |
 //  |_|     \____/|_| \_|\_____|  |_|  |_____\____/|_| \_|_____/                                                   
 
-public UpdateRegistrationForm(key, value) {
-  this.registrationForm.patchValue({[key]: value});
-}
-//  public Login() {
-//    const dialogRef = this.dialog.open(LoginComponent);
-//  }
 public openSnackbar(input){
   this._snackBar.open(input, 'Close', {
     duration: 5000,
@@ -128,33 +88,7 @@ handleErrorMessage(message) { //FIXME: needs renaming of error and message
         this.oracle = data;
       }
     ); 
-  }
-
-  public async RequestUsers(){
-    this.api.GetUsers().subscribe(
-      data => {
-        this.users = data;
-      }
-    ); 
-  }                                                         
-
-  public async RequestProjects(){
-    this.api.GetProjects().subscribe(
-      data => {
-        this.projects = data;
-        this.usersJson = data['0'];
-        console.log(Array.of(data['0']))
-        console.log(this.usersJson)
-        // console.log(data)
-      }
-    );   
-  }
-
-  public RequestCreateUser(form){
-    this.api.CreateUser(new User(form.firstname, form.lastname)).subscribe(
-      res => this.handleErrorMessage(res), err => this.handleErrorMessage(err),
-    );  
-  }    
+  }  
 
 //   _____ _____          _      ____   _____  _____ 
 //  |  __ \_   _|   /\   | |    / __ \ / ____|/ ____|
