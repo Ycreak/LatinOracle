@@ -54,7 +54,7 @@ class PoemGenerator:
             poem += self.PickSubClause()
             poem += self.GenerateSentence()
 
-        self.oracle = poem
+        self.oracle = poem.upper()
         print('succes!')
 
     # def AddExtraForms(self, )

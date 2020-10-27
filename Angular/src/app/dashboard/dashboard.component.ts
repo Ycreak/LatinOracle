@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 
 import { ApiService } from '../api.service';
 import { UtilityService } from '../utility.service';
@@ -34,6 +34,7 @@ export class DashboardComponent implements OnInit {
     public authService: AuthService,
     private dialog: MatDialog, 
     private _snackBar: MatSnackBar,
+    private el: ElementRef,
     ) { }
 
   ngOnInit(){
@@ -74,6 +75,13 @@ handleErrorMessage(message) { //FIXME: needs renaming of error and message
   this.openSnackbar(output); //FIXME: Spaghetti.
 } 
 
+public HandleColorChange() {
+  (this.el.nativeElement as HTMLElement).style.setProperty('--main-color', 'white');
+}
+
+public HandleWallpaperChange() {
+  (this.el.nativeElement as HTMLElement).style.setProperty('--wallpaper', 'url("../../img/wall.jpg") no-repeat');
+}
 
 //   _____  ______ ____  _    _ ______  _____ _______ _____ 
 //  |  __ \|  ____/ __ \| |  | |  ____|/ ____|__   __/ ____|
@@ -86,6 +94,7 @@ handleErrorMessage(message) { //FIXME: needs renaming of error and message
     this.api.GetOracle().subscribe(
       data => {
         this.oracle = data;
+        this.HandleColorChange()
       }
     ); 
   }  
@@ -101,7 +110,9 @@ handleErrorMessage(message) { //FIXME: needs renaming of error and message
   public OpenAbout() {
     const dialogRef = this.dialog.open(ShowAboutDialog);
   }
+
 }
+
 
 //   _____ _                _____ _____ ______  _____ 
 //  / ____| |        /\    / ____/ ____|  ____|/ ____|
