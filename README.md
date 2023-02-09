@@ -1,1 +1,2 @@
-dip_philips
+# Introduction
+Simple program to generate Latin oracles
