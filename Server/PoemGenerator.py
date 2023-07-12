@@ -5,8 +5,8 @@
  # | |____| | |  __/ (_| |  | |
   # \_____|_|  \___|\__,_|  |_|
 
-  # Philippe Bors 1773585
-  # Luuk Nolden 1370898
+  # 1773585
+  # 1370898
   # Computational Creativity 1
   # Leiden University
   # October 2020
